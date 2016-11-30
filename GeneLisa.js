@@ -1,12 +1,12 @@
 /**
  * Created by prabod on 11/30/16.
  */
-var POPULATION = 20;
+var POPULATION = 10;
 var VERTICES = 4;
 var GENE_SIZE = 4 + (2 * VERTICES);
-var POLYGONS = 50;
+var POLYGONS = 20;
 var CHROME_SIZE = GENE_SIZE * POLYGONS;
-var CROSSOVER_RATE = 0.2;
+var CROSSOVER_RATE = 0.6;
 var MUTATION_RATE = 0.001;
 var population = [];
 var generation = 0;
@@ -104,13 +104,13 @@ function crossover(chromesome1,chromosome2,rate,geneSize,chromoSize) {
                 bt.push(dna);
             }
         }
-        // var bt1 = chromesome1.bitString.slice(0,index).concat(chromosome2.bitString.slice(index));
-        // var bt2 = chromosome2.bitString.slice(0,index).concat(chromesome1.bitString.slice(index));
-        var cr1 =  new Chromosome(bt,geneSize,chromoSize);
-        // var cr2 =  new Chromosome(bt2,geneSize,chromoSize);
-        return cr1;
+        var bt1 = chromesome1.bitString.slice(0,index).concat(chromosome2.bitString.slice(index));
+        var bt2 = chromosome2.bitString.slice(0,index).concat(chromesome1.bitString.slice(index));
+        var cr1 =  new Chromosome(bt1,geneSize,chromoSize);
+        var cr2 =  new Chromosome(bt2,geneSize,chromoSize);
+        return [cr1,cr2];
     }
-    return (Math.random() < 0.5) ? chromesome1 : chromosome2;
+    return [chromesome1 ,chromosome2];
 
 }
 function roulette(totalFitness, population) {
@@ -160,12 +160,13 @@ function tick() {
         return b.fitnessValue - a.fitnessValue;
     });
     var newPopulation = [];
-    for(var k = 0 ; k < POPULATION; k++){
+    for(var k = 0 ; k < POPULATION/2; k++){
         var father = roulette(totalFitness,population);
         var mother = roulette(totalFitness,population);
         var crossed = crossover(father,mother,CROSSOVER_RATE,GENE_SIZE,CHROME_SIZE);
-        crossed.mutate(MUTATION_RATE);
-        newPopulation.push(crossed);
+        crossed[0].mutate(MUTATION_RATE);
+        crossed[1].mutate(MUTATION_RATE);
+        newPopulation.push(crossed[0],crossed[1]);
     }
     var my =document.getElementById("myCanvas");
     var ct =my.getContext("2d");
