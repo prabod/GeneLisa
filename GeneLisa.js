@@ -2,16 +2,17 @@
  * Created by prabod on 11/30/16.
  */
 var POPULATION = 50;
-var VERTICES = 4;
+var VERTICES = 3;
 var GENE_SIZE = 4 + (2 * VERTICES);
 var POLYGONS = 125;
 var CHROME_SIZE = GENE_SIZE * POLYGONS;
-var CROSSOVER_RATE = 0.7;
-var MUTATION_RATE = 0.001;
+var CROSSOVER_RATE = 0.15;
+var MUTATION_RATE = 0.01;
 var population = [];
 var generation = 0;
 var goal;
 var workingData = [];
+var mutateAmount = 0.1;
 class Chromosome{
     constructor(bitString,geneSize,chromoSize){
         this.bitString = bitString;
@@ -45,15 +46,6 @@ class Chromosome{
         }
         this.bitString = bString;
     }
-    mutate(rate){
-        for (var i = 0 ; i < this.bitString.length ;i++){
-            var rand = Math.random();
-            if (rand < rate){
-                this.bitString[i] = Math.random()
-            }
-
-        }
-    }
 
     draw(context,width,height){
         context.fillStyle = '#000';
@@ -65,8 +57,8 @@ class Chromosome{
                 this.bitString[i+5] * height
             );
             for(var j = 0; j < this.vertices - 1; j++){
-                context.lineTo(this.bitString[i+4+(2*(j+1))] * width,
-                    this.bitString[i+5+(2*(j+1))] * height)
+                context.lineTo(this.bitString[i+j*2+6] * width,
+                    this.bitString[i+j*2+7] * height)
             }
             context.closePath();
             var colors = 'rgba(' +
@@ -87,31 +79,36 @@ class Chromosome{
             var dist = workingData[i] - imagedata[i];
             fit += dist * dist;
         }
-        this.fitnessValue = fit*100/(workingData.length*256*256);
-        //this.ctx.clearRect(0, 0, 350, 350);
+        this.fitnessValue = 1 - fit / (75 * 75 * 4 * 256 * 256);
         return this.fitnessValue;
     }
 }
 
+
 function crossover(chromesome1,chromosome2,rate,geneSize,chromoSize) {
     var rand = Math.random();
     if (rand < rate){
-        var index = rand * chromesome1.bitString.length >> 0;
         var bt = [];
         for (var i =0; i< chromoSize; i += geneSize){
             for(var j = 0; j < geneSize; j++){
                 var inheritedGene = (Math.random() < 0.5) ? chromesome1 : chromosome2;
                 var dna = inheritedGene.bitString[i+j];
+                var randon = Math.random();
+                if (randon < MUTATION_RATE){
+                    dna += Math.random() * mutateAmount * 2 - mutateAmount;
+                }
+                if (dna < 0)
+                    dna = 0;
+
+                if (dna > 1)
+                    dna = 1;
                 bt.push(dna);
             }
         }
-        var bt1 = chromesome1.bitString.slice(0,index).concat(chromosome2.bitString.slice(index));
-        var bt2 = chromosome2.bitString.slice(0,index).concat(chromesome1.bitString.slice(index));
-        var cr1 =  new Chromosome(bt1,geneSize,chromoSize);
-        var cr2 =  new Chromosome(bt2,geneSize,chromoSize);
-        return [cr1,cr2];
+        var cr1 =  new Chromosome(bt,geneSize,chromoSize);
+        return cr1;
     }
-    return [chromesome1 ,chromosome2];
+    return (Math.random() < 0.5) ? chromesome1 : chromosome2;
 
 }
 function roulette(totalFitness, population) {
@@ -132,8 +129,6 @@ function init() {
 
         base_image.onload = function(){
             goalctx.drawImage(base_image,0,0);
-            //goal = goalctx.getImageData(0,0,350,350).data;
-            //console.log(goal);
             goalc.width = 75;
             goalc.height = 75;
 
@@ -178,17 +173,14 @@ function tick() {
         }
         totalFitness += temp;
     }
-    population = population.sort(function(a, b) {
-        return b.fitnessValue - a.fitnessValue;
-    });
+
     var newPopulation = [];
-    for(var k = 0 ; k < POPULATION/2; k++){
+
+    for(var k = 0 ; k < POPULATION; k++){
         var father = roulette(totalFitness,population);
         var mother = roulette(totalFitness,population);
         var crossed = crossover(father,mother,CROSSOVER_RATE,GENE_SIZE,CHROME_SIZE);
-        crossed[0].mutate(MUTATION_RATE);
-        crossed[1].mutate(MUTATION_RATE);
-        newPopulation.push(crossed[0],crossed[1]);
+        newPopulation.push(crossed);
     }
     var my =document.getElementById("myCanvas");
     var ct =my.getContext("2d");
@@ -196,5 +188,6 @@ function tick() {
     population = newPopulation;
     generation ++;
     console.log(fit);
+
     document.getElementById("gen").innerHTML = generation;
 }
