@@ -1,16 +1,17 @@
 /**
  * Created by prabod on 11/30/16.
  */
-var POPULATION = 10;
+var POPULATION = 50;
 var VERTICES = 4;
 var GENE_SIZE = 4 + (2 * VERTICES);
-var POLYGONS = 20;
+var POLYGONS = 125;
 var CHROME_SIZE = GENE_SIZE * POLYGONS;
-var CROSSOVER_RATE = 0.6;
+var CROSSOVER_RATE = 0.7;
 var MUTATION_RATE = 0.001;
 var population = [];
 var generation = 0;
 var goal;
+var workingData = [];
 class Chromosome{
     constructor(bitString,geneSize,chromoSize){
         this.bitString = bitString;
@@ -82,11 +83,11 @@ class Chromosome{
         var fit = 0;
         var imagedata = this.ctx.getImageData(0,0,width,height).data;
 
-        for (var i = 0; i < goal.length;i++){
-            var dist = goal[i] - imagedata[i];
+        for (var i = 0; i < workingData.length;i++){
+            var dist = workingData[i] - imagedata[i];
             fit += dist * dist;
         }
-        this.fitnessValue = fit*100/(goal.length*256*256);
+        this.fitnessValue = fit*100/(workingData.length*256*256);
         //this.ctx.clearRect(0, 0, 350, 350);
         return this.fitnessValue;
     }
@@ -131,8 +132,29 @@ function init() {
 
         base_image.onload = function(){
             goalctx.drawImage(base_image,0,0);
-            goal = goalctx.getImageData(0,0,350,350).data;
-            console.log(goal);
+            //goal = goalctx.getImageData(0,0,350,350).data;
+            //console.log(goal);
+            goalc.width = 75;
+            goalc.height = 75;
+
+            goalctx.drawImage(base_image,
+                0, 0, 350, 350, 0, 0,
+                75, 75);
+
+            var imageData = goalctx.getImageData(0, 0,
+                75 ,
+                75).data;
+
+            workingData = [];
+            var p = 75 * 75 * 4;
+
+            for (var i = 0; i < p; i++) {
+                workingData[i] = imageData[i];
+            }
+
+            goalc.width = 350;
+            goalc.height = 350;
+            goalctx.drawImage(base_image, 0, 0);
 
         };
         base_image.src = './mona.png';
@@ -149,7 +171,7 @@ function tick() {
     var fittest;
     var fit=0;
     for(var j = 0 ;j < population.length ; j++){
-        var temp = population[j].fitness(350,350,goal);
+        var temp = population[j].fitness(75,75,goal);
         if (temp >= fit){
             fit = temp;
             fittest = population[j];
