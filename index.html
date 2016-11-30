@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+    <script src="GeneLisa.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 
+<button onclick="setInterval(tick, 0);">start</button>
+<canvas id="goal" width="350" height="350" style="margin-right: 4px;"></canvas>
+<canvas id="myCanvas" width="350" height="350" style="margin-left: 4px;"></canvas>
+
+
+<canvas id="workingCanvas"
+        width="350" height="350"
+        style="display: none;"></canvas>
+
+<p id="gen"></p>
+<script>init();
+</script>
 </body>
 </html>
