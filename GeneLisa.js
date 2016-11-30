@@ -46,6 +46,15 @@ class Chromosome{
         }
         this.bitString = bString;
     }
+    mutate(rate){
+        for (var i = 0 ; i < this.bitString.length ;i++){
+            var rand = Math.random();
+            if (rand < rate){
+                this.bitString[i] = Math.random()
+            }
+
+        }
+    }
 
     draw(context,width,height){
         context.fillStyle = '#000';
@@ -80,6 +89,7 @@ class Chromosome{
             fit += dist * dist;
         }
         this.fitnessValue = 1 - fit / (75 * 75 * 4 * 256 * 256);
+        //this.ctx.clearRect(0, 0, 350, 350);
         return this.fitnessValue;
     }
 }
@@ -88,6 +98,7 @@ class Chromosome{
 function crossover(chromesome1,chromosome2,rate,geneSize,chromoSize) {
     var rand = Math.random();
     if (rand < rate){
+        var index = rand * chromesome1.bitString.length >> 0;
         var bt = [];
         for (var i =0; i< chromoSize; i += geneSize){
             for(var j = 0; j < geneSize; j++){
@@ -105,7 +116,10 @@ function crossover(chromesome1,chromosome2,rate,geneSize,chromoSize) {
                 bt.push(dna);
             }
         }
+        // var bt1 = chromesome1.bitString.slice(0,index).concat(chromosome2.bitString.slice(index));
+        // var bt2 = chromosome2.bitString.slice(0,index).concat(chromesome1.bitString.slice(index));
         var cr1 =  new Chromosome(bt,geneSize,chromoSize);
+        // var cr2 =  new Chromosome(bt2,geneSize,chromoSize);
         return cr1;
     }
     return (Math.random() < 0.5) ? chromesome1 : chromosome2;
@@ -129,6 +143,8 @@ function init() {
 
         base_image.onload = function(){
             goalctx.drawImage(base_image,0,0);
+            //goal = goalctx.getImageData(0,0,350,350).data;
+            //console.log(goal);
             goalc.width = 75;
             goalc.height = 75;
 
@@ -173,14 +189,31 @@ function tick() {
         }
         totalFitness += temp;
     }
-
+    population = population.sort(function(a, b) {
+        return b.fitnessValue - a.fitnessValue;
+    });
     var newPopulation = [];
 
-    for(var k = 0 ; k < POPULATION; k++){
-        var father = roulette(totalFitness,population);
-        var mother = roulette(totalFitness,population);
-        var crossed = crossover(father,mother,CROSSOVER_RATE,GENE_SIZE,CHROME_SIZE);
-        newPopulation.push(crossed);
+    /* The number of individuals from the current generation to select for
+     * breeding
+     */
+    var selectCount = Math.floor(population.length * CROSSOVER_RATE);
+
+    /* The number of individuals to randomly generate */
+    var randCount = Math.ceil(1 / CROSSOVER_RATE);
+
+    for (var i = 0; i < selectCount; i++) {
+
+        for (var h = 0; h < randCount; h++) {
+            var randIndividual = i;
+
+            while (randIndividual == i) {
+                randIndividual = (Math.random() * selectCount) >> 0;
+            }
+            var crossed = crossover(population[i],population[randIndividual],CROSSOVER_RATE,GENE_SIZE,CHROME_SIZE);
+            // crossed.mutate(MUTATION_RATE);
+            newPopulation.push(crossed);
+        }
     }
     var my =document.getElementById("myCanvas");
     var ct =my.getContext("2d");
