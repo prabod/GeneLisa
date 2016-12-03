@@ -293,7 +293,7 @@ function init() {
             goalctx.drawImage(base_image, 0, 0);
 
         };
-        base_image.src = './mona.gif';
+        base_image.src = './mona.png';
 
         /**
          * Generate Random Chromosomes for the initial generation
@@ -385,6 +385,6 @@ function breed() {
     /**
      * update generation and fitness
      * */
-    document.getElementById("gen").innerHTML = generation;
+    document.getElementById("gen").innerHTML = "Generation = " + generation;
     document.getElementById("fit").innerHTML = "Fitness = " + fit * 100 + "%";
 }
