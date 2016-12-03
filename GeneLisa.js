@@ -1,10 +1,10 @@
 /**
  * Created by prabod on 11/30/16.
  */
-var POPULATION = 150;
+var POPULATION = 50;
 var VERTICES = 3;
 var GENE_SIZE = 4 + (2 * VERTICES);
-var POLYGONS = 250;
+var POLYGONS = 125;
 var CHROME_SIZE = GENE_SIZE * POLYGONS;
 var CROSSOVER_RATE = 0.15;
 var MUTATION_RATE = 0.01;
