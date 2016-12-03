@@ -77,14 +77,14 @@ Likewise when the whole process generated the same amount that a population have
 #####Some of the results from my simulation
 
 
-<img src="/content/images/2016/12/download--6--2.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--7--2.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--8--1.png" alt="Drawing" style="width: 100px;"/>
-<img src="/content/images/2016/12/download--9-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--10--2.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--11-.png" alt="Drawing" style="width: 100px;"/>
-<img src="/content/images/2016/12/download--12-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--13--1.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--14-.png" alt="Drawing" style="width: 100px;"/>
-<img src="/content/images/2016/12/download--15--1.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--16-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--1-.png" alt="Drawing" style="width: 100px;"/>
-<img src="/content/images/2016/12/download--2-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--3-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--4-.png" alt="Drawing" style="width: 100px;"/>
-<img src="/content/images/2016/12/download--5-.png" alt="Drawing" style="width: 100px;"/><img src="/content/images/2016/12/download--5-.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--6--2.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--7--2.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--8--1.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--9-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--10--2.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--11-.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--12-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--13--1.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--14-.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--15--1.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--16-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--1-.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--2-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--3-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--4-.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download--5-.png" alt="Drawing" style="width: 100px;"/><img src="http://prabod.rathnayaka.me/content/images/2016/12/download--5-.png" alt="Drawing" style="width: 100px;"/>
 Reference Image
-<img src="/content/images/2016/12/download.png" alt="Drawing" style="width: 100px;"/>
+<img src="http://prabod.rathnayaka.me/content/images/2016/12/download.png" alt="Drawing" style="width: 100px;"/>
 
 [Full Source Code GitHub](https://github.com/prabod/GeneLisa)
 
